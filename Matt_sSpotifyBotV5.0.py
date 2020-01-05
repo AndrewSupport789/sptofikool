@@ -52,12 +52,13 @@ async def on_ready():
     print(Fore.RESET)
 
 
-print(Fore.LIGHTGREEN_EX + "Welcome in set-up mode, please fill these details in order to make your bot fully functional")
+print(Fore.LIGHTGREEN_EX + "Welcome in set-up 
+, please fill these details in order to make your bot fully functional")
 print(Fore.YELLOW + "WARNING:")
 print(Fore.YELLOW + "Not filling some of these details or not filling them correctly, can end up in your bot not working properly")
 print(Fore.RESET)
 while 1==1:
-    Mode = input(f"Please select mode you want to use")
+    Mode = input("Please select mode you want to use")
     if Mode == "Paid":
         break
     elif Mode == "Free":
