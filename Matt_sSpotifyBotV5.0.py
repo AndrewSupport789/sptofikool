@@ -20,7 +20,6 @@ except FileNotFoundError:
 Accounts = []
 Codes = "codes.txt"
 client = discord.Client()
-token = data["Token"]
 bot = commands.Bot(command_prefix=f'{data["Prefix"]}')
 Name = "Jon"
 Surname = "Snow"
@@ -645,4 +644,4 @@ async def on_command_error(ctx,exception):
         embed = discord.Embed(
             title=f'You need to enter redeem code behind your email ({data["Prefix"]}redeem country email code)', color=0xff5959)
         message = await ctx.send(embed=embed)
-bot.run(token)
+bot.run(os.getenv('BOT_TOKEN'))
