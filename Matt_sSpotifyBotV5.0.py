@@ -71,7 +71,7 @@ while 1==1:
 
 
 @bot.command()
-    async def redeem(ctx, country: str,email: str):
+    if command.startswith('redeem');
         """ You can use this command to upgrade your account to premium.
             country - Country you live in, and you have spotify account in.
             email - Your email address, where bot will send invitation link.
@@ -624,4 +624,5 @@ async def on_command_error(ctx,exception):
         embed = discord.Embed(
             title=f'You need to enter redeem code behind your email ({data["Prefix"]}redeem country email code)', color=0xff5959)
         message = await ctx.send(embed=embed)
+                   
 bot.run(os.getenv('BOT_TOKEN'))
