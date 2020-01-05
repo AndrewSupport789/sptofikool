@@ -7,34 +7,11 @@ from colorama import init, Fore, Back, Style
 from discord.ext import commands
 init()
 
-reminder = 'Do not forget try all links for all accounts!'
 
-owo = "**__We are sorry but bot will be offline for other servers for few days due low account stock!__**"
-
-msgg = '```Check your DMs man!```'
 
 client = commands.Bot(command_prefix='!')
 #client = discord.Client()
 Clientdiscord = discord.Client()
-
-#create an arraylist containing phrases you want your bot to switch through.
-status = cycle(['web: www.rabbits-gen.cf', 'With BlackRabbit', 'discord.gg/cZ8GcPF', '!cmds for commands', '!cmds'])
-
-client.remove_command('help')
-
-@client.command()
-async def clr(ctx, amount=5):
-    await ctx.channel.purge(limit=amount)
-
-@client.command()
-async def ban(ctx):
-    check_role = get(ctx.message.guild.roles, name='BAN-SQUAD')
-    if check_role in ctx.author.roles:
-        await ctx.send("https://gifimage.net/wp-content/uploads/2017/07/ban-hammer-gif-14.gif")
-    else:
-        await ctx.send("You can't use this!")
-
-
 
 
 @client.event
@@ -283,5 +260,5 @@ async def on_message(message):
 async def on_ready():
     change_status.start()
 
-    
+
 client.run(os.getenv('BOT_TOKEN'))
