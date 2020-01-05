@@ -51,7 +51,6 @@ print("Welcome in set-up mode, please fill these details in order to make your b
 print("WARNING:")
 print("Not filling some of these details or not filling them correctly, can end up in your bot not working properly")
 while 1==1:
-    Mode = input(f"Please select mode you want to use (Type Free/Paid)\n")
     if Mode == "Paid":
         break
     elif Mode == "Free":
