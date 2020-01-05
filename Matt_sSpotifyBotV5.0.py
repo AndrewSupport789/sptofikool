@@ -57,7 +57,7 @@ print(Fore.YELLOW + "WARNING:")
 print(Fore.YELLOW + "Not filling some of these details or not filling them correctly, can end up in your bot not working properly")
 print(Fore.RESET)
 while 1==1:
-    Mode = input(f"Please select mode you want to use (Type Free/Paid)\n")
+    Mode = input(f"Please select mode you want to use")
     if Mode == "Paid":
         break
     elif Mode == "Free":
