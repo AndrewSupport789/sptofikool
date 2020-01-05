@@ -5,7 +5,6 @@ import re, os , time , subprocess
 from os import listdir
 from os.path import isfile, join
 from discord.ext import commands
-init()
 
 #Reading config in order to get bot's token.
 try:
