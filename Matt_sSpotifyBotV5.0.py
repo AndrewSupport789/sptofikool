@@ -1,9 +1,10 @@
 #Importing all needed modules.
 import discord
 import json, aiohttp
-import re, os , time , subprocess
+import re, os , time , subprocess , colorama
 from os import listdir
 from os.path import isfile, join
+from colorama import init, Fore, Back, Style
 from discord.ext import commands
 
 #Reading config in order to get bot's token.
