@@ -1,24 +1,24 @@
 #Importing all needed modules.
 import discord
 import json, aiohttp
-import re, os , time , subprocess , colorama
+import re, os , time , subprocess
 from os import listdir
 from os.path import isfile, join
-from colorama import init, Fore, Back, Style
 from discord.ext import commands
+init()
 
 #Reading config in order to get bot's token.
 try:
     with open('config.json') as (f):
         data = json.load(f)
 except FileNotFoundError:
-    print(Fore.RED +
-          "Configuration file can't be found, please create new one, or move it to folder where your exe of bot is")
+    print("Configuration file can't be found, please create new one, or move it to folder where your exe of bot is")
 
 #Setting important variables.
 Accounts = []
 Codes = "codes.txt"
 client = discord.Client()
+token = data["Token"]
 bot = commands.Bot(command_prefix=f'{data["Prefix"]}')
 Name = "Jon"
 Surname = "Snow"
@@ -27,7 +27,7 @@ Surname = "Snow"
 @bot.event #Happening every time bot is turned of for first time. And Getting important informations from Administrator of bot.
 async def on_ready():
     os.system('cls')
-    print(Fore.GREEN + """
+    print("""
      __             _   _  __         _           _   
     / _\_ __   ___ | |_(_)/ _|_   _  | |__   ___ | |_ 
     \ \| '_ \ / _ \| __| | |_| | | | | '_ \ / _ \| __|
@@ -41,20 +41,17 @@ async def on_ready():
     |_.__/ \__, | |_| |_| |_|\__,_|\__|\__|           
            |___/                                      
     """)
-    print(Fore.RESET)
+    print()
     try:
         with open(Codes, "r") as file:
             bot.codes = [code.strip("\n") for code in file.readlines()]
     except FileNotFoundError:
-        print(Fore.RED +
-              "Codes file can't be found or does not exist, please create new one or move it to same folder where exe of your bot is")
-    print(Fore.RESET)
+        print("Codes file can't be found or does not exist, please create new one or move it to same folder where exe of your bot is")
 
 
-print(Fore.LIGHTGREEN_EX + "Welcome in set-up mode, please fill these details in order to make your bot fully functional")
-print(Fore.YELLOW + "WARNING:")
-print(Fore.YELLOW + "Not filling some of these details or not filling them correctly, can end up in your bot not working properly")
-print(Fore.RESET)
+print("Welcome in set-up mode, please fill these details in order to make your bot fully functional")
+print("WARNING:")
+print("Not filling some of these details or not filling them correctly, can end up in your bot not working properly")
 while 1==1:
     Mode = input(f"Please select mode you want to use (Type Free/Paid)\n")
     if Mode == "Paid":
@@ -88,8 +85,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
         await ctx.channel.purge(limit=1)
         if str(ctx.channel) in Channel:
             if '@' in email:
-                print(Fore.YELLOW + f"@{ctx.author} upgrading his account {email} from {country.upper()} in free mode")
-                print(Fore.RESET)
+                print( + f"@{ctx.author} upgrading his account {email} from {country.upper()} in free mode")
+                
                 result = 'false'
                 tries = 0
                 embed = discord.Embed(
@@ -107,8 +104,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                             embed = discord.Embed(
                                 title=f"Sorry, but we currently don't have any stocks for {country.upper()}", color=0xff5959)
                             await message.edit(embed=embed)
-                            print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
-                            print (Fore.RESET)
+                            print ("User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
+                            
                             result = "true"
                             break
                         try:
@@ -134,8 +131,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                 title=f"Sorry, but {country.upper()} is currently out of stock.", color = 0xff5959
                                 )
                             await message.edit(embed=embed)
-                            print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
-                            print (Fore.RESET)
+                            print ("User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
+                            
                             result = "true"
                             break
                         combo = account.split(':')
@@ -186,8 +183,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                         result = 'false'
                                         tries += 1
                                         if Debug == "Debug":
-                                            print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
-                                            print(Fore.RESET)
+                                            print("Failed to upgrade {ctx.author} retrying...({tries})")
+                                            
                                         if tries >= 5:
                                             embed = discord.Embed(
                                                 title=f"There were some issues, retrying.", color=0xd3d3d3)
@@ -209,7 +206,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                     async with await session.get(url,headers=headers) as resp:
                                         WebsiteResponse = await resp.json()
                                         if Debug == "Debug":
-                                            print(Fore.RESET + f"{WebsiteResponse}")
+                                            print("{WebsiteResponse}")
                                         accessControl = WebsiteResponse["accessControl"]
                                         Slots = accessControl["planHasFreeSlots"]
                                         if Slots is True:
@@ -218,7 +215,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                             embed = discord.Embed(
                                                 title=f"Invitation code was sent, check private messages @{ctx.author}.", color=0x00FF00)
                                             await message.edit(embed=embed)
-                                            print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
+                                            print('@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
                                             await ctx.author.send(f"In order to upgrade your account please click on lin below, and enter prov"
                                                                        f"\nFill in these informations in form!"
                                                                        f"\n"
@@ -231,8 +228,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                         elif Slots is False:
                                             tries += 1
                                             if Debug == "Debug":
-                                                print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
-                                                print(Fore.RESET)
+                                                print("Failed to upgrade {ctx.author} retrying...({tries})")
+                                                
                                             embed = discord.Embed(
                                             title=f"There were some issues, retrying.", color=0xd3d3d3)
                                             await message.edit(embed=embed)
@@ -244,8 +241,8 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                                 else:
                                     tries += 1
                                     if Debug == "Debug":
-                                        print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
-                                        print(Fore.RESET)
+                                        print("Failed to upgrade {ctx.author} retrying...({tries})")
+                                        
                                     embed = discord.Embed(
                                     title=f"There were some issues, retrying.", color=0xd3d3d3)
                                     await message.edit(embed=embed)
@@ -258,18 +255,18 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
                         break
                     if tries >= 6:
                         if Debug == "Debug":
-                                        print(Fore.RED + f"Failed to upgrade user bacuse of too many fails")
-                                        print(Fore.RESET)
+                                        print("Failed to upgrade user bacuse of too many fails")
+                                        
                         embed = discord.Embed(
                                     title=f"Oops, we're not able to upgrade your account at the moment, please try again later.", color=0xff5959)
                         await message.edit(embed=embed)
-                        print(Fore.RED + f"Seems like there are some issues with {country.upper()} please check your stock if there isn't something weird happening.")
-                        print(Fore.RESET)
+                        print("Seems like there are some issues with {country.upper()} please check your stock if there isn't something weird happening.")
+                        
                         break
             else:
                 if Debug == "Debug":
-                    print(Fore.RED + f"User {ctx.author} tried to upgrade with invalid email address {email}")
-                    print(Fore.RESET)
+                    print("User {ctx.author} tried to upgrade with invalid email address {email}")
+                    
                 embed = discord.Embed(
                     title=f"Please use valid email address in order to upgrade your account.", color=0xff5959)
                 await ctx.send(embed=embed)
@@ -295,24 +292,24 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                     title=f"{ctx.author} That's a bad upgrade key, sorry :/, please try again. It's possible that code wasn't in system so far", color=0xff5959)
                     with open(Codes, "r") as file:
                         bot.codes = [code.strip("\n") for code in file.readlines()]
-                        print(Fore.GREEN + 'Codes file refreshed, new codes can be used now')
+                        print('Codes file refreshed, new codes can be used now')
                     message = await ctx.send(embed=embed)
-                    print(Fore.RED + f'@{ctx.author} tried to upgrade with an invalid upgrade key ({code})')
-                    print(Fore.RESET)
+                    print('@{ctx.author} tried to upgrade with an invalid upgrade key ({code})')
+                    
                     return
                 try:  # Check if code file does exist
                     with open(Codes, "r") as file:
                         bot.codes = [code.strip("\n") for code in file.readlines()]
-                        print(Fore.GREEN + 'Codes file refreshed, new codes can be used now')
+                        print('Codes file refreshed, new codes can be used now')
                 except FileNotFoundError:
-                    print(Fore.RED +
+                    print(
                           "Codes file can't be found or does not exist, please create new one or move it to same folder where exe of your bot is")
-                    print(Fore.RED + f'@{ctx.author} tried to upgrade with an invalid upgrade key ({code})')
-                    print(Fore.RESET)
+                    print('@{ctx.author} tried to upgrade with an invalid upgrade key ({code})')
+                    
                     return
                 else:
-                    print(Fore.YELLOW + f"@{ctx.author} upgrading his account {email} from {country.upper()} in paid mode with code {code}")
-                    print(Fore.RESET)
+                    print( + f"@{ctx.author} upgrading his account {email} from {country.upper()} in paid mode with code {code}")
+                    
                     result = 'false'
                     tries = 0
                     embed = discord.Embed(
@@ -330,8 +327,8 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                 embed = discord.Embed(
                                     title=f"Sorry, but we currently don't have any stocks for {country.upper()}", color=0xff5959)
                                 await message.edit(embed=embed)
-                                print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
-                                print (Fore.RESET)
+                                print ("User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
+                                
                                 result = "true"
                                 break
                             try:
@@ -357,8 +354,8 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                     title=f"Sorry, but {country.upper()} is currently out of stock.", color = 0xff5959
                                     )
                                 await message.edit(embed=embed)
-                                print (Fore.RED + f"User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
-                                print (Fore.RESET)
+                                print ("User @{ctx.author} tried to upgrade his account, but {country.upper()} is already out of stock or never had any stocks")
+                                
                                 result = "true"
                                 break
                             combo = account.split(':')
@@ -409,8 +406,8 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                             result = 'false'
                                             tries += 1
                                             if Debug == "Debug":
-                                                print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
-                                                print(Fore.RESET)
+                                                print("Failed to upgrade {ctx.author} retrying...({tries})")
+                                                
                                             if tries >= 5:
                                                 embed = discord.Embed(
                                                     title=f"There were some issues, retrying.", color=0xd3d3d3)
@@ -432,7 +429,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                         async with await session.get(url,headers=headers) as resp:
                                             WebsiteResponse = await resp.json()
                                             if Debug == "Debug":
-                                                print(Fore.RESET + f"{WebsiteResponse}")
+                                                print("{WebsiteResponse}")
                                             accessControl = WebsiteResponse["accessControl"]
                                             Slots = accessControl["planHasFreeSlots"]
                                             if Slots is True:
@@ -441,7 +438,7 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                                 embed = discord.Embed(
                                                     title=f"Invitation code was sent, check private messages @{ctx.author}.", color=0x00FF00)
                                                 await message.edit(embed=embed)
-                                                print(Fore.GREEN + f'@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
+                                                print('@{ctx.author} successfully upgraded his account {email} from {country.upper()} in free mode')
                                                 await ctx.author.send(f"In order to upgrade your account please click on lin below, and enter prov"
                                                                            f"\nFill in these informations in form!"
                                                                            f"\n"
@@ -459,8 +456,8 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                             elif Slots is False:
                                                 tries += 1
                                                 if Debug == "Debug":
-                                                    print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
-                                                    print(Fore.RESET)
+                                                    print("Failed to upgrade {ctx.author} retrying...({tries})")
+                                                    
                                                 embed = discord.Embed(
                                                 title=f"There were some issues, retrying.", color=0xd3d3d3)
                                                 await message.edit(embed=embed)
@@ -472,8 +469,8 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                                     else:
                                         tries += 1
                                         if Debug == "Debug":
-                                            print(Fore.RED + f"Failed to upgrade {ctx.author} retrying...({tries})")
-                                            print(Fore.RESET)
+                                            print("Failed to upgrade {ctx.author} retrying...({tries})")
+                                            
                                         embed = discord.Embed(
                                         title=f"There were some issues, retrying.", color=0xd3d3d3)
                                         await message.edit(embed=embed)
@@ -486,18 +483,18 @@ if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgra
                             break
                         if tries >= 6:
                             if Debug == "Debug":
-                                            print(Fore.RED + f"Failed to upgrade user bacuse of too many fails")
-                                            print(Fore.RESET)
+                                            print("Failed to upgrade user bacuse of too many fails")
+                                            
                             embed = discord.Embed(
                                         title=f"Oops, we're not able to upgrade your account at the moment, please try again later.", color=0xff5959)
                             await message.edit(embed=embed)
-                            print(Fore.RED + f"Seems like there are some issues with {country.upper()} please check your stock if there isn't something weird happening.")
-                            print(Fore.RESET)
+                            print("Seems like there are some issues with {country.upper()} please check your stock if there isn't something weird happening.")
+                            
                             return
             else:
                 if Debug == "Debug":
-                    print(Fore.RED + f"User {ctx.author} tried to upgrade with invalid email address {email}")
-                    print(Fore.RESET)
+                    print("User {ctx.author} tried to upgrade with invalid email address {email}")
+                    
                 embed = discord.Embed(
                     title=f"Please use valid email address in order to upgrade your account.", color=0xff5959)
                 await ctx.send(embed=embed)
@@ -518,8 +515,8 @@ async def stock(ctx, country:str):
             title=f"Please use this command without <>, thanks", color=0xff5959)
         message = await ctx.send(embed=embed)
         return
-    print(Fore.YELLOW + f'@{ctx.author} checked stocks for {country.upper()}')
-    print(Fore.RESET)
+    print( + f'@{ctx.author} checked stocks for {country.upper()}')
+    
     await ctx.channel.purge(limit=1)  # Deleting message.
     if str(ctx.channel) in Stocks:
         if country == 'all':  # If command is !stock all then do this
@@ -562,8 +559,8 @@ async def restock(ctx, country: str):
         In case you want to rest all countries use !restock all
     """
     await ctx.channel.purge(limit=1)  # Deleting the restock message
-    print(Fore.GREEN + f'@{ctx.author} restocked stocks')
-    print(Fore.RESET)
+    print('@{ctx.author} restocked stocks')
+    
     embed = discord.Embed(
         title="Restocking....", color=0xffa500)
     message = await ctx.send(embed=embed)
@@ -594,7 +591,7 @@ async def restock(ctx, country: str):
                     title=f"{country.upper()} was successfully restocked", color=0x00FF00)
                 await message.edit(embed=embed)
         except FileNotFoundError:
-            print(Fore.RED +
+            print(
                   "You can't restock this country, since you don't have any restock file for this country in Restocks folder")
             embed = discord.Embed(
                 title="File for this country doesn't exist in restocks folder.", color=0xff5959)
@@ -603,8 +600,8 @@ async def restock(ctx, country: str):
 
 @bot.command()
 async def credits(ctx):
-    print(Fore.YELLOW + f'@{ctx.author} used !credits')
-    print(Fore.RESET)
+    print( + f'@{ctx.author} used !credits')
+    
     await ctx.channel.purge(limit=1)
     await ctx.channel.send(f"```Open source spotify bot full developed by matt"
                           f"\nhttps://Spotify-Premium.pw"
@@ -621,10 +618,10 @@ async def credits(ctx):
 @bot.command()
 async def cls(ctx):
     """You can use this command to clean console."""
-    print(Fore.YELLOW + f'@{ctx.author} used !cls')
-    print(Fore.RESET)
+    print( + f'@{ctx.author} used !cls')
+    
     os.system('cls')
-    print(Fore.GREEN + """
+    print("""
      __             _   _  __         _           _   
     / _\_ __   ___ | |_(_)/ _|_   _  | |__   ___ | |_ 
     \ \| '_ \ / _ \| __| | |_| | | | | '_ \ / _ \| __|
@@ -632,15 +629,16 @@ async def cls(ctx):
     \__/ .__/ \___/ \__|_|_|  \__, | |_.__/ \___/ \__|
        |_|                    |___/                                                                 
     """)
-    print(Fore.RESET)
+    
 @bot.event
 async def on_command_error(ctx,exception):
     if Debug == "Debug":
-        print(Fore.RESET)
-        print(Fore.RED +f"@{ctx.author} tried to upgrade his account but got an exception: {exception}")
-        print(Fore.RESET)
+        
+        print(f"@{ctx.author} tried to upgrade his account but got an exception: {exception}")
+        
     if isinstance(exception, commands.errors.MissingRequiredArgument):
         embed = discord.Embed(
             title=f'You need to enter redeem code behind your email ({data["Prefix"]}redeem country email code)', color=0xff5959)
         message = await ctx.send(embed=embed)
+
 bot.run(os.getenv('BOT_TOKEN'))
