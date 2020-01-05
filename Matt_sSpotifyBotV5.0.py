@@ -20,7 +20,6 @@ except FileNotFoundError:
 Accounts = []
 Codes = "codes.txt"
 client = discord.Client()
-token = data["Token"]
 bot = commands.Bot(command_prefix=f'{data["Prefix"]}')
 Name = "Jon"
 Surname = "Snow"
