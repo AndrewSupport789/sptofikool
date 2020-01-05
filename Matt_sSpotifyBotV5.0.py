@@ -1,7 +1,7 @@
 #Importing all needed modules.
 import discord
 import json, aiohttp
-import re, os , time , subprocess , colorama
+import re, os , time , subprocess
 from os import listdir
 from os.path import isfile, join
 from colorama import init, Fore, Back, Style
