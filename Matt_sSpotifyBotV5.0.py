@@ -52,17 +52,7 @@ async def on_ready():
     print(Fore.RESET)
 
 
-print(Fore.LIGHTGREEN_EX + "Welcome in set-up 
-, please fill these details in order to make your bot fully functional")
-print(Fore.YELLOW + "WARNING:")
-print(Fore.YELLOW + "Not filling some of these details or not filling them correctly, can end up in your bot not working properly")
-print(Fore.RESET)
-while 1==1:
-    Mode = input("Please select mode you want to use")
-    if Mode == "Paid":
-        break
-    elif Mode == "Free":
-        break
+
 Channel = input(f"Please enter name of channel where users will be able to upgrade their keys\n")
 if not Channel:
     Channel = "spotify"
@@ -80,8 +70,7 @@ while 1==1:
         break
 
 
-if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgrade key
-    @bot.command()
+@bot.command()
     async def redeem(ctx, country: str,email: str):
         """ You can use this command to upgrade your account to premium.
             country - Country you live in, and you have spotify account in.
@@ -281,7 +270,7 @@ if Mode == "Free": #Upgrading user in free mode = user doesn't need to use upgra
             message = await ctx.send(embed=embed)
 
 
-if Mode == "Paid": #Upgrading user in free mode = user doesn't need to use upgrade key
+
     @bot.command()
     async def redeem(ctx, country: str,email: str, code: str):
         """ You can use this command to upgrade your account to premium.
@@ -603,25 +592,6 @@ async def restock(ctx, country: str):
             await message.edit(embed=embed)
 
 
-@bot.command()
-async def credits(ctx):
-    """ Credits to who coded this bot"""
-    print(Fore.YELLOW + f'@{ctx.author} used !credits')
-    print(Fore.RESET)
-    await ctx.channel.purge(limit=1)
-    await ctx.channel.send(f"```Open source spotify bot full developed by matt"
-                          f"\nhttps://www.nulled.to/user/2158082-matoooo"
-                          f"\nDesign made using a guide from Billie"
-                          f"\nhttps://www.nulled.to/user/1236023-billieeilish"
-                          f"\nhttps://www.nulled.to/topic/835795-free-source-code-how-to-make-your-python-tools-look-cooler-colors-and-ascii-art/```"
-                          )
-    print(f"Open source spotify bot full developed by matt"
-                          f"\nhttps://www.nulled.to/user/2158082-matoooo"
-                          f"\nDesign made using a guide from Billie"
-                          f"\nhttps://www.nulled.to/user/1236023-billieeilish"
-                          f"\nhttps://www.nulled.to/topic/835795-free-source-code-how-to-make-your-python-tools-look-cooler-colors-and-ascii-art/"
-                          )
-
 
 @bot.command()
 async def cls(ctx):
@@ -654,5 +624,4 @@ async def on_command_error(ctx,exception):
         embed = discord.Embed(
             title=f'You need to enter redeem code behind your email ({data["Prefix"]}redeem country email code)', color=0xff5959)
         message = await ctx.send(embed=embed)
-                   
 bot.run(os.getenv('BOT_TOKEN'))
